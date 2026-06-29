@@ -2,27 +2,22 @@
 
 These prompts are designed for the recorded/live-review demo described in the workshop concept notes.
 
-The demo narrative:
+The condensed demo narrative:
 
 1. Give the agent context and constraints.
 2. Let it inspect the repository and propose a plan.
 3. Let it use Sketch via MCP to create a first design concept.
-4. Ask it to implement a concrete first slice from the accepted architecture and design.
-5. Review what changed.
-6. Redirect the agent toward visual quality, content structure, accessibility, and deployment.
+4. Ask it to build the complete first website version from the accepted architecture, prepared content, and Sketch design.
+5. Add CI/CD for GitHub Pages and show the finished result.
 
-The prompts are intentionally not microscopic. They should leave room for the agent to make decisions while still keeping each run bounded enough for a demo checkpoint.
+The website build prompt is intentionally large. In real project work, this should normally be split into smaller reviewable slices for quality assurance. For the workshop, the larger run is an experiment and a clearer story: the agent receives strong context, a design artifact, source boundaries, and accepted architecture decisions, then attempts a complete first implementation.
 
 ## Suggested Recording Checkpoints
 
 - `demo/01-orientation-plan` after the agent has inspected the repo and proposed architecture.
 - `demo/02-sketch-design` after a first Sketch concept exists via MCP.
-- `demo/03-scaffold` after the app scaffold builds locally.
-- `demo/04-content-model` after content loading and typed collections exist.
-- `demo/05-homepage-slice` after the first visible page exists.
-- `demo/06-core-pages` after Research, Projects, People, and Theses are implemented.
-- `demo/07-polish-review` after accessibility, responsive layout, and visual polish.
-- `demo/08-deployment` after GitHub Pages workflow exists.
+- `demo/03-complete-website` after the Astro website builds locally.
+- `demo/04-deployment` after GitHub Pages workflow exists.
 
 ## How To Use
 
