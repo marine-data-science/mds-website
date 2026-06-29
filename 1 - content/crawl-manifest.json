@@ -1,0 +1,308 @@
+[
+  {
+    "slug": "people",
+    "title": "People",
+    "sourceUrl": "https://www.mds-lab.de/people",
+    "path": "people/index.mdx",
+    "collection": "people",
+    "blocks": 3,
+    "images": 10
+  },
+  {
+    "slug": "home",
+    "title": "Marine Data Science",
+    "sourceUrl": "https://www.mds-lab.de/home",
+    "path": "pages/home.mdx",
+    "collection": "pages",
+    "blocks": 3,
+    "images": 1
+  },
+  {
+    "slug": "publications",
+    "title": "Publications",
+    "sourceUrl": "https://www.mds-lab.de/publications",
+    "path": "publications/index.mdx",
+    "collection": "publications",
+    "blocks": 3,
+    "images": 0
+  },
+  {
+    "slug": "lifted-marginal-filtering",
+    "title": "Lifted Marginal Filtering",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering",
+    "path": "research/lifted-marginal-filtering.mdx",
+    "collection": "research",
+    "blocks": 5,
+    "images": 1
+  },
+  {
+    "slug": "lifted-marginal-filtering-1",
+    "title": "Neuro-Symbolic Human Activity Recognition",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering-1",
+    "path": "research/neuro-symbolic-human-activity-recognition.mdx",
+    "collection": "research",
+    "blocks": 5,
+    "images": 1
+  },
+  {
+    "slug": "lifted-marginal-filtering-2",
+    "title": "Deep Learning for Tabular and Categorical Data",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering-2",
+    "path": "research/deep-learning-for-tabular-and-categorical-data.mdx",
+    "collection": "research",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "lifted-marginal-filtering-1-1",
+    "title": "Explaining Neural Networks",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering-1-1",
+    "path": "research/explaining-neural-networks.mdx",
+    "collection": "research",
+    "blocks": 5,
+    "images": 1
+  },
+  {
+    "slug": "lifted-marginal-filtering-1-1-1",
+    "title": "Tractable Probabilistic Models",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering-1-1-1",
+    "path": "research/tractable-probabilistic-models.mdx",
+    "collection": "research",
+    "blocks": 5,
+    "images": 1
+  },
+  {
+    "slug": "lifted-marginal-filtering-1-1-1-1",
+    "title": "Detecting Disorientation of People with Dementia",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering-1-1-1-1",
+    "path": "research/detecting-disorientation-of-people-with-dementia.mdx",
+    "collection": "research",
+    "blocks": 5,
+    "images": 1
+  },
+  {
+    "slug": "stefan-ludtke",
+    "title": "Stefan Lüdtke",
+    "sourceUrl": "https://www.mds-lab.de/stefan-ludtke",
+    "path": "people/stefan-ludtke.mdx",
+    "collection": "people",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "theses",
+    "title": "Theses",
+    "sourceUrl": "https://www.mds-lab.de/theses",
+    "path": "theses/index.mdx",
+    "collection": "theses",
+    "blocks": 3,
+    "images": 0
+  },
+  {
+    "slug": "teaching",
+    "title": "Teaching",
+    "sourceUrl": "https://www.mds-lab.de/teaching",
+    "path": "teaching/index.mdx",
+    "collection": "teaching",
+    "blocks": 3,
+    "images": 0
+  },
+  {
+    "slug": "data4sim",
+    "title": "Data4Sim",
+    "sourceUrl": "https://www.mds-lab.de/data4sim",
+    "path": "projects/data4sim.mdx",
+    "collection": "projects",
+    "blocks": 5,
+    "images": 2
+  },
+  {
+    "slug": "mohd",
+    "title": "Moh'd Khier Al Kfari",
+    "sourceUrl": "https://www.mds-lab.de/mohd",
+    "path": "people/mohd.mdx",
+    "collection": "people",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "ki-ubb-cluj-napoca",
+    "title": "KI (UBB Cluj-Napoca)",
+    "sourceUrl": "https://www.mds-lab.de/ki-ubb-cluj-napoca",
+    "path": "projects/ki-ubb-cluj-napoca.mdx",
+    "collection": "projects",
+    "blocks": 3,
+    "images": 0
+  },
+  {
+    "slug": "ml-micro",
+    "title": "Analyzing Microbiome Data using Machine Learning",
+    "sourceUrl": "https://www.mds-lab.de/ml-micro",
+    "path": "projects/ml-micro.mdx",
+    "collection": "projects",
+    "blocks": 5,
+    "images": 1
+  },
+  {
+    "slug": "lifted-marginal-filtering-1-1-1-2",
+    "title": "Domain Adaptation for Human Activity Recognition",
+    "sourceUrl": "https://www.mds-lab.de/lifted-marginal-filtering-1-1-1-2",
+    "path": "research/domain-adaptation-for-human-activity-recognition.mdx",
+    "collection": "research",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "anna",
+    "title": "Anna Kujat",
+    "sourceUrl": "https://www.mds-lab.de/anna",
+    "path": "people/anna.mdx",
+    "collection": "people",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "ai4pumps",
+    "title": "AI4Pumps",
+    "sourceUrl": "https://www.mds-lab.de/ai4pumps",
+    "path": "projects/ai4pumps.mdx",
+    "collection": "projects",
+    "blocks": 5,
+    "images": 2
+  },
+  {
+    "slug": "daniel-wulff",
+    "title": "Daniel Wulff",
+    "sourceUrl": "https://www.mds-lab.de/daniel-wulff",
+    "path": "people/daniel-wulff.mdx",
+    "collection": "people",
+    "blocks": 4,
+    "images": 0
+  },
+  {
+    "slug": "thesis-1",
+    "title": "Master Thesis",
+    "sourceUrl": "https://www.mds-lab.de/theses/transfer-learning-from-medical-ultrasound-to-marine-sonar-image-data",
+    "path": "theses/theses/transfer-learning-from-medical-ultrasound-to-marine-sonar-image-data.mdx",
+    "collection": "theses",
+    "blocks": 4,
+    "images": 0
+  },
+  {
+    "slug": "show2instruct",
+    "title": "Show2Instruct",
+    "sourceUrl": "https://www.mds-lab.de/show2instruct",
+    "path": "projects/show2instruct.mdx",
+    "collection": "projects",
+    "blocks": 5,
+    "images": 2
+  },
+  {
+    "slug": "projects",
+    "title": "Projects",
+    "sourceUrl": "https://www.mds-lab.de/projects",
+    "path": "projects/index.mdx",
+    "collection": "projects",
+    "blocks": 2,
+    "images": 3
+  },
+  {
+    "slug": "bharathi",
+    "title": "Bharathi Kannan Nithyanantham",
+    "sourceUrl": "https://www.mds-lab.de/bharathi",
+    "path": "people/bharathi.mdx",
+    "collection": "people",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "research",
+    "title": "Research",
+    "sourceUrl": "https://www.mds-lab.de/research",
+    "path": "research/index.mdx",
+    "collection": "research",
+    "blocks": 2,
+    "images": 8
+  },
+  {
+    "slug": "mml",
+    "title": "Marine Machine Learning",
+    "sourceUrl": "https://www.mds-lab.de/mml",
+    "path": "projects/mml.mdx",
+    "collection": "projects",
+    "blocks": 4,
+    "images": 4
+  },
+  {
+    "slug": "optimal-sensor-placement",
+    "title": "Optimal Sensor Placement",
+    "sourceUrl": "https://www.mds-lab.de/optimal-sensor-placement",
+    "path": "research/optimal-sensor-placement.mdx",
+    "collection": "research",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "root",
+    "title": "RoOT",
+    "sourceUrl": "https://www.mds-lab.de/root",
+    "path": "projects/root.mdx",
+    "collection": "projects",
+    "blocks": 3,
+    "images": 0
+  },
+  {
+    "slug": "ultrasound",
+    "title": "Ultrasound Image Analysis",
+    "sourceUrl": "https://www.mds-lab.de/ultrasound",
+    "path": "research/ultrasound.mdx",
+    "collection": "research",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "ashwin",
+    "title": "Ashwin Nedungadi",
+    "sourceUrl": "https://www.mds-lab.de/ashwin",
+    "path": "people/ashwin.mdx",
+    "collection": "people",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "thesis-1-1",
+    "title": "Master Thesis 2",
+    "sourceUrl": "https://www.mds-lab.de/theses/cross-domain-translation-of-angiography",
+    "path": "theses/theses/cross-domain-translation-of-angiography.mdx",
+    "collection": "theses",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "thesis-1-1-1",
+    "title": "Master Thesis",
+    "sourceUrl": "https://www.mds-lab.de/theses/uncertainty-aware-stenoses-segmentation",
+    "path": "theses/theses/uncertainty-aware-stenoses-segmentation.mdx",
+    "collection": "theses",
+    "blocks": 4,
+    "images": 1
+  },
+  {
+    "slug": "egoproject2026",
+    "title": "EgoProject 2026",
+    "sourceUrl": "https://www.mds-lab.de/egoproject2026",
+    "path": "projects/egoproject2026.mdx",
+    "collection": "projects",
+    "blocks": 7,
+    "images": 0
+  },
+  {
+    "slug": "microbiology-thesis",
+    "title": "Microbiology",
+    "sourceUrl": "https://www.mds-lab.de/theses/analyzing-microbiome-metabarcoding-data-with-tabpfn",
+    "path": "theses/theses/analyzing-microbiome-metabarcoding-data-with-tabpfn.mdx",
+    "collection": "theses",
+    "blocks": 5,
+    "images": 1
+  }
+]
