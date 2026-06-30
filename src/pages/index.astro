@@ -9,6 +9,7 @@ import {
   getResearchCards,
   getThesisItems,
 } from "@lib/content";
+import { withBasePath } from "@lib/site";
 
 const home = getIndex("pages");
 const researchCards = getResearchCards();
@@ -20,6 +21,10 @@ const featuredResearch = researchCards.slice(0, 4);
 const featuredProjects = projectCards.slice(0, 3);
 const featuredPeople = people.slice(0, 4);
 const featuredTheses = theses.filter((item) => item.status !== "Finished").slice(0, 4);
+const researchHref = withBasePath("/research/");
+const projectsHref = withBasePath("/projects/");
+const peopleHref = withBasePath("/people/");
+const thesesHref = withBasePath("/theses/");
 ---
 
 <BaseLayout title="Marine Data Science" description={home.summary}>
@@ -38,9 +43,9 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
           teaching, research expertise, and cooperation entry points here.
         </p>
         <div class="pill-row" aria-label="Entry points">
-          <a class="pill" href="/theses/">Thesis topics</a>
-          <a class="pill" href="/research/">Research topics</a>
-          <a class="pill" href="/projects/">Cooperation</a>
+          <a class="pill" href={thesesHref}>Thesis topics</a>
+          <a class="pill" href={researchHref}>Research topics</a>
+          <a class="pill" href={projectsHref}>Cooperation</a>
         </div>
       </div>
       <aside class="preview-panel" aria-label="Selected research preview">
@@ -60,27 +65,27 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
 
   <section class="section">
     <div class="section-header">
-      <h2><a href="/research/">Research</a></h2>
+      <h2><a href={researchHref}>Research</a></h2>
       <p>Research topics across marine data, machine learning, sensor systems, uncertainty, and visual computing.</p>
     </div>
     <CardGrid cards={featuredResearch} />
-    <p class="section-more"><a href="/research/">View all research</a></p>
+    <p class="section-more"><a href={researchHref}>View all research</a></p>
   </section>
 
   <section class="section band">
     <div class="section-inner">
       <div class="section-header">
-        <h2><a href="/projects/">Projects</a></h2>
+        <h2><a href={projectsHref}>Projects</a></h2>
         <p>Funded and applied projects connect research methods with logistics, industry, software interaction, teaching, and marine technology.</p>
       </div>
       <CardGrid cards={featuredProjects} variant="roomy" />
-      <p class="section-more"><a href="/projects/">View all projects</a></p>
+      <p class="section-more"><a href={projectsHref}>View all projects</a></p>
     </div>
   </section>
 
   <section class="section">
     <div class="section-header">
-      <h2><a href="/people/">People</a></h2>
+      <h2><a href={peopleHref}>People</a></h2>
       <p>Researchers, coordinators, engineers, and students working across machine learning, marine data science, and visual computing.</p>
     </div>
     <div class="people-list">
@@ -97,14 +102,14 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
         ))
       }
     </div>
-    <p class="section-more"><a href="/people/">View all people</a></p>
+    <p class="section-more"><a href={peopleHref}>View all people</a></p>
   </section>
 
   <section class="theses-feature">
     <div class="theses-panel">
       <div>
         <p class="eyebrow">For students</p>
-        <h2><a href="/theses/">Bachelor and Master Theses</a></h2>
+        <h2><a href={thesesHref}>Bachelor and Master Theses</a></h2>
         <p class="hero-support">
           We are always looking for motivated students. Open topics are listed, and students can also propose topics in the group's research areas.
         </p>
@@ -120,7 +125,7 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
           ))
         }
       </div>
-      <p class="section-more theses-more"><a href="/theses/">View all thesis topics</a></p>
+      <p class="section-more theses-more"><a href={thesesHref}>View all thesis topics</a></p>
     </div>
   </section>
 </BaseLayout>

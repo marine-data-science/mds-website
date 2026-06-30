@@ -1,3 +1,5 @@
+import { withBasePath } from "./site";
+
 export type Section = "research" | "projects" | "people" | "theses";
 
 export function slugFromFileName(fileName: string): string {
@@ -15,7 +17,7 @@ export function slugify(value: string): string {
 }
 
 export function routeFor(section: Section, slug: string): string {
-  return `/${section}/${slug}/`;
+  return withBasePath(`/${section}/${slug}/`);
 }
 
 const legacyRoutes = new Map<string, string>([
@@ -60,8 +62,12 @@ export function rewriteHref(href: string | undefined): string {
     return "#";
   }
 
+  if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return href;
+  }
+
   if (href === "https://ash") {
-    return "/people/ashwin/";
+    return withBasePath("/people/ashwin/");
   }
 
   if (href.startsWith("https:// https://")) {
@@ -73,5 +79,6 @@ export function rewriteHref(href: string | undefined): string {
   }
 
   const [pathPart, suffix = ""] = href.split(/(?=[?#])/);
-  return legacyRoutes.get(pathPart) ? `${legacyRoutes.get(pathPart)}${suffix}` : href;
+  const rewritten = legacyRoutes.get(pathPart) ?? pathPart;
+  return pathPart.startsWith("/") ? `${withBasePath(rewritten)}${suffix}` : href;
 }

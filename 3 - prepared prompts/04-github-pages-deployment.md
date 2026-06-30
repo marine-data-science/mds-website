@@ -23,10 +23,13 @@ Before making changes, inspect:
 Requirements:
 
 - Add the minimal GitHub Actions workflow needed to build and deploy the static Astro site to GitHub Pages.
+- Trigger deployment only when relevant changes are pushed to the `main` branch. Do not deploy from every branch.
 - Configure the Astro base/site settings correctly for repository-based GitHub Pages deployment if needed.
+- Deploy only the generated static build output, most likely the Astro `dist/` directory. Do not upload the full repository as the Pages artifact.
 - Keep permissions and secrets minimal.
 - Do not introduce deployment services beyond GitHub Pages.
 - Do not publish `3 - prepared prompts/`.
+- Do not publish source-only folders such as `1 - content/`, `2 - styling/`, `docs/`, or `3 - prepared prompts/` except insofar as their processed assets/content are included in the generated build output.
 - Preserve the existing source-boundary decisions.
 - Document any required GitHub repository settings after adding the workflow.
 
@@ -34,7 +37,8 @@ Verification:
 
 - Run the local production build.
 - If possible, run any available typecheck or tests.
-- Inspect the generated workflow for correct trigger, permissions, artifact upload, and deploy step.
+- Inspect the generated workflow for correct `main` branch trigger, permissions, artifact upload, and deploy step.
+- Confirm that the Pages artifact points at the static build output directory rather than the repository root.
 - Summarize what a maintainer needs to enable in GitHub before deployment works.
 
 End with:
@@ -43,6 +47,7 @@ End with:
 - verification results
 - expected GitHub Pages behavior
 - manual repository settings still required
+- URL of the publicly created Github Page
 ```
 
 ## Review checkpoint

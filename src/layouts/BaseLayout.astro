@@ -1,5 +1,6 @@
 ---
 import { styleAssetUrl } from "@lib/paths";
+import { withBasePath } from "@lib/site";
 import "@styles/global.css";
 
 type NavItem = {
@@ -13,15 +14,16 @@ const {
 } = Astro.props;
 
 const nav: NavItem[] = [
-  { href: "/research/", label: "Research" },
-  { href: "/projects/", label: "Projects" },
-  { href: "/people/", label: "People" },
-  { href: "/theses/", label: "Theses" },
-  { href: "/teaching/", label: "Teaching" },
-  { href: "/publications/", label: "Publications" },
+  { href: withBasePath("/research/"), label: "Research" },
+  { href: withBasePath("/projects/"), label: "Projects" },
+  { href: withBasePath("/people/"), label: "People" },
+  { href: withBasePath("/theses/"), label: "Theses" },
+  { href: withBasePath("/teaching/"), label: "Teaching" },
+  { href: withBasePath("/publications/"), label: "Publications" },
 ];
 
 const logo = styleAssetUrl("Logo_MDS_1-3-Final_color.svg");
+const homeHref = withBasePath("/");
 ---
 
 <!doctype html>
@@ -35,7 +37,7 @@ const logo = styleAssetUrl("Logo_MDS_1-3-Final_color.svg");
   <body>
     <div class="top-rule" aria-hidden="true"></div>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="Marine Data Science home">
+      <a class="brand" href={homeHref} aria-label="Marine Data Science home">
         <img src={logo} alt="Marine Data Science logo" width="150" height="106" />
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">

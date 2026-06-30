@@ -5,7 +5,8 @@ import matter from "gray-matter";
 import { z } from "zod";
 import { CONTENT_ROOT, contentAssetUrl } from "./paths";
 import { stripMarkdown } from "./markdown";
-import { routeFor, slugFromFileName, slugify, type Section } from "./routes";
+import { rewriteHref, routeFor, slugFromFileName, slugify, type Section } from "./routes";
+import { withBasePath } from "./site";
 
 const imageSchema = z.object({
   src: z.string(),
@@ -110,15 +111,15 @@ function readSource(relativePath: string): SourceEntry {
 
 function hrefForEntry(section: SourceEntry["section"], slug: string): string {
   if (section === "pages" && slug === "home") {
-    return "/";
+    return withBasePath("/");
   }
   if (section === "teaching" || section === "publications") {
-    return `/${section}/`;
+    return withBasePath(`/${section}/`);
   }
   if (section === "research" || section === "projects" || section === "people" || section === "theses") {
-    return slug === "index" ? `/${section}/` : routeFor(section, slug);
+    return slug === "index" ? withBasePath(`/${section}/`) : routeFor(section, slug);
   }
-  return "/";
+  return withBasePath("/");
 }
 
 function normalizeVisibleMarkdown(markdown: string): string {
@@ -201,7 +202,7 @@ function matchDetail(item: SourceFrontmatter["items"][number], entries: SourceEn
 }
 
 function itemHref(item: SourceFrontmatter["items"][number], detail: SourceEntry | undefined, section: Section): string | undefined {
-  if (item.href) return item.href;
+  if (item.href) return rewriteHref(item.href);
   if (detail) return detail.href;
   if (item.slug && section !== "research") return routeFor(section, item.slug);
   return undefined;

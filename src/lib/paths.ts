@@ -1,4 +1,5 @@
 import path from "node:path";
+import { withBasePath } from "./site";
 
 export const ROOT_DIR = process.cwd();
 export const CONTENT_ROOT = path.join(ROOT_DIR, "1 - content");
@@ -25,7 +26,7 @@ export function contentAssetUrl(sourceFile: string, src: string): string {
     throw new Error(`Content asset escapes source boundary: ${src}`);
   }
 
-  return `/content-assets/${toPosixPath(relative)}`;
+  return withBasePath(`/content-assets/${toPosixPath(relative)}`);
 }
 
 export function styleAssetUrl(src: string): string {
@@ -36,5 +37,5 @@ export function styleAssetUrl(src: string): string {
     throw new Error(`Style asset escapes source boundary: ${src}`);
   }
 
-  return `/style-assets/${toPosixPath(relative)}`;
+  return withBasePath(`/style-assets/${toPosixPath(relative)}`);
 }
