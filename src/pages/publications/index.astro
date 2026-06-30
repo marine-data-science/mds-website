@@ -8,8 +8,8 @@ const entry = getIndex("publications");
 const publications = getPublicationsByYear();
 ---
 
-<BaseLayout title="Publications" description="Publications grouped by year.">
-  <PageIntro eyebrow="Publications" title="Publications" intro="Compact year-grouped list of publications from the source material." sourceUrl={entry.frontmatter.sourceUrl} />
+<BaseLayout title={entry.title} description="Publications grouped by year.">
+  <PageIntro eyebrow="Publications" title="Publications" intro="Compact year-grouped list of publications." />
   <section class="publications">
     {
       publications.map((group) => (

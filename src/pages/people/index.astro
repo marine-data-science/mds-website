@@ -1,24 +1,23 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PageIntro from "@components/PageIntro.astro";
-import { getIndex, getPeopleCards, sectionIntro } from "@lib/content";
+import { getPeopleCards, sectionIntro } from "@lib/content";
 
-const index = getIndex("people");
 const people = getPeopleCards();
 ---
 
 <BaseLayout title="People" description={sectionIntro("people")}>
-  <PageIntro eyebrow="People" title="People" intro={sectionIntro("people")} sourceUrl={index.frontmatter.sourceUrl} />
+  <PageIntro eyebrow="People" title="People" intro={sectionIntro("people")} />
   <section class="section">
     <div class="people-list">
       {
         people.map((person) => (
           <article class="person-row">
-            {person.image && <img src={person.image.src} alt={person.image.alt} loading="lazy" />}
+            {person.image && (person.href ? <a class="person-image-link" href={person.href}><img class="person-avatar" src={person.image.src} alt={person.image.alt} loading="lazy" /></a> : <img class="person-avatar" src={person.image.src} alt={person.image.alt} loading="lazy" />)}
             <div>
               <h3>{person.href ? <a href={person.href}>{person.title}</a> : person.title}</h3>
               <p>{person.summary}</p>
-              {!person.hasDetail && <p class="micro-note">Overview entry only</p>}
+              {person.href && <p class="micro-note"><a href={person.href}>More info</a></p>}
             </div>
           </article>
         ))

@@ -2,10 +2,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PageIntro from "@components/PageIntro.astro";
 import Prose from "@components/Prose.astro";
-import SourceMeta from "@components/SourceMeta.astro";
-import { getIndex } from "@lib/content";
-
-const entry = getIndex("teaching");
 const teachingMarkdown = `## Semester Projects
 
 #### [Computer Vision for Spatial Understanding in Egocentric Data - Summer Semester 2026](/projects/egoproject2026/)
@@ -14,11 +10,10 @@ const teachingMarkdown = `## Semester Projects
 ---
 
 <BaseLayout title="Teaching" description="Current teaching and semester project entry points.">
-  <PageIntro eyebrow="Teaching" title="Teaching" intro="Current teaching and semester project entry points from the source site." sourceUrl={entry.frontmatter.sourceUrl} />
+  <PageIntro eyebrow="Teaching" title="Teaching" intro="Current teaching and semester project entry points." />
   <section class="detail-shell">
     <article>
       <Prose markdown={teachingMarkdown} />
     </article>
-    <SourceMeta sourceUrl={entry.frontmatter.sourceUrl} lastModified={entry.frontmatter.lastModified} />
   </section>
 </BaseLayout>

@@ -4,6 +4,7 @@ import CardGrid from "@components/CardGrid.astro";
 import {
   getIndex,
   getPeopleCards,
+  getPreviewCard,
   getProjectCards,
   getResearchCards,
   getThesisItems,
@@ -14,7 +15,7 @@ const researchCards = getResearchCards();
 const projectCards = getProjectCards();
 const people = getPeopleCards();
 const theses = getThesisItems();
-const preview = researchCards.find((card) => card.title === "Lifted Marginal Filtering") ?? researchCards[0];
+const preview = getPreviewCard();
 const featuredResearch = researchCards.slice(0, 4);
 const featuredProjects = projectCards.slice(0, 3);
 const featuredPeople = people.slice(0, 4);
@@ -42,10 +43,10 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
           <a class="pill" href="/projects/">Cooperation</a>
         </div>
       </div>
-      <aside class="preview-panel" aria-label="Source content preview">
+      <aside class="preview-panel" aria-label="Selected research preview">
         {preview.image && <img src={preview.image.src} alt={preview.image.alt} />}
         <div>
-          <p>Research preview</p>
+          <p>{preview.meta ?? "Preview"}</p>
           <h2><a href={preview.href}>{preview.title}</a></h2>
         </div>
         <div class="network-mark" aria-hidden="true">
@@ -57,51 +58,53 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
     </div>
   </section>
 
-  <p class="below-hint">Latest entry points below: research topics, funded projects, people, and theses.</p>
-
   <section class="section">
     <div class="section-header">
-      <h2>Research</h2>
-      <p>Compact topic cards show a visual cue, a one-sentence summary, and a route into the full source-backed topic page.</p>
+      <h2><a href="/research/">Research</a></h2>
+      <p>Research topics across marine data, machine learning, sensor systems, uncertainty, and visual computing.</p>
     </div>
     <CardGrid cards={featuredResearch} />
+    <p class="section-more"><a href="/research/">View all research</a></p>
   </section>
 
   <section class="section band">
     <div class="section-inner">
       <div class="section-header">
-        <h2>Projects</h2>
-        <p>Funded and applied projects use roomier cards because external visitors need project context and cooperation signals quickly.</p>
+        <h2><a href="/projects/">Projects</a></h2>
+        <p>Funded and applied projects connect research methods with logistics, industry, software interaction, teaching, and marine technology.</p>
       </div>
       <CardGrid cards={featuredProjects} variant="roomy" />
+      <p class="section-more"><a href="/projects/">View all projects</a></p>
     </div>
   </section>
 
   <section class="section">
     <div class="section-header">
-      <h2>People</h2>
-      <p>Overview-first scanning for students and collaborators. Detail pages appear only where source files exist.</p>
+      <h2><a href="/people/">People</a></h2>
+      <p>Researchers, coordinators, engineers, and students working across machine learning, marine data science, and visual computing.</p>
     </div>
     <div class="people-list">
       {
         featuredPeople.map((person) => (
           <article class="person-row">
-            {person.image && <img src={person.image.src} alt={person.image.alt} loading="lazy" />}
+            {person.image && (person.href ? <a class="person-image-link" href={person.href}><img class="person-avatar" src={person.image.src} alt={person.image.alt} loading="lazy" /></a> : <img class="person-avatar" src={person.image.src} alt={person.image.alt} loading="lazy" />)}
             <div>
               <h3>{person.href ? <a href={person.href}>{person.title}</a> : person.title}</h3>
               <p>{person.summary}</p>
+              {person.href && <p class="micro-note"><a href={person.href}>More info</a></p>}
             </div>
           </article>
         ))
       }
     </div>
+    <p class="section-more"><a href="/people/">View all people</a></p>
   </section>
 
   <section class="theses-feature">
     <div class="theses-panel">
       <div>
         <p class="eyebrow">For students</p>
-        <h2>Bachelor and Master Theses</h2>
+        <h2><a href="/theses/">Bachelor and Master Theses</a></h2>
         <p class="hero-support">
           We are always looking for motivated students. Open topics are listed, and students can also propose topics in the group's research areas.
         </p>
@@ -117,6 +120,7 @@ const featuredTheses = theses.filter((item) => item.status !== "Finished").slice
           ))
         }
       </div>
+      <p class="section-more theses-more"><a href="/theses/">View all thesis topics</a></p>
     </div>
   </section>
 </BaseLayout>

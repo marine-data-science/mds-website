@@ -2,7 +2,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PageIntro from "@components/PageIntro.astro";
 import Prose from "@components/Prose.astro";
-import SourceMeta from "@components/SourceMeta.astro";
 import { getEntries } from "@lib/content";
 
 export function getStaticPaths() {
@@ -19,6 +18,5 @@ const { entry } = Astro.props;
       {entry.image && <img class="detail-image" src={entry.image.src} alt={entry.image.alt} />}
       <Prose markdown={entry.body} />
     </article>
-    <SourceMeta sourceUrl={entry.frontmatter.sourceUrl} lastModified={entry.frontmatter.lastModified} />
   </section>
 </BaseLayout>

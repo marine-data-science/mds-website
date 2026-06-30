@@ -52,4 +52,4 @@ Source: https://www.mds-lab.de/sitemap.xml
 - [Analyzing Microbiome Metabarcoding Data with TabPFN](theses/analyzing-microbiome-metabarcoding-data-with-tabpfn.mdx) — `https://www.mds-lab.de/microbiology-thesis`
 - [Cross-Domain Translation of Angiography: From Stenosis to Healthy Vessel Appearance](theses/cross-domain-translation-of-angiography.mdx) — `https://www.mds-lab.de/thesis-1-1`
 - [Transfer Learning from Medical Ultrasound to Marine Sonar Image Data](theses/transfer-learning-from-medical-ultrasound-to-marine-sonar-image-data.mdx) — `https://www.mds-lab.de/thesis-1`
-- [Uncertainty-Aware Stenoses Segmentation in Digital Subtraction Angriography using Probabilistic Deep Learning](theses/uncertainty-aware-stenoses-segmentation.mdx) — `https://www.mds-lab.de/thesis-1-1-1`
+- [Uncertainty-Aware Stenosis Segmentation in Digital Subtraction Angiography using Probabilistic Deep Learning](theses/uncertainty-aware-stenoses-segmentation.mdx) — `https://www.mds-lab.de/thesis-1-1-1`

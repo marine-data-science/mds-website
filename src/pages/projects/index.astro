@@ -2,14 +2,13 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PageIntro from "@components/PageIntro.astro";
 import CardGrid from "@components/CardGrid.astro";
-import { getIndex, getProjectCards, sectionIntro } from "@lib/content";
+import { getProjectCards, sectionIntro } from "@lib/content";
 
-const index = getIndex("projects");
 const cards = getProjectCards();
 ---
 
 <BaseLayout title="Projects" description={sectionIntro("projects")}>
-  <PageIntro eyebrow="Projects and cooperation" title="Projects" intro={sectionIntro("projects")} sourceUrl={index.frontmatter.sourceUrl} />
+  <PageIntro eyebrow="Projects and cooperation" title="Projects" intro={sectionIntro("projects")} />
   <section class="section">
     <CardGrid cards={cards} variant="roomy" />
   </section>

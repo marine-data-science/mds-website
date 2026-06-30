@@ -5,7 +5,6 @@ import matter from "gray-matter";
 import { z } from "zod";
 import { CONTENT_ROOT, contentAssetUrl } from "./paths";
 import { stripMarkdown } from "./markdown";
-import { correctedTitle, bodyOverrides, overrideKey, summaryOverrides } from "./translations";
 import { routeFor, slugFromFileName, slugify, type Section } from "./routes";
 
 const imageSchema = z.object({
@@ -15,6 +14,9 @@ const imageSchema = z.object({
 
 const itemSchema = z.object({
   title: z.string(),
+  slug: z.string().optional(),
+  href: z.string().optional(),
+  status: z.string().optional(),
   image: z.string().optional(),
   description: z.string().optional().default(""),
 });
@@ -24,6 +26,7 @@ const frontmatterSchema = z.object({
   sourceUrl: z.string().url().optional(),
   lastModified: z.string().optional(),
   collection: z.string().optional(),
+  previewTeaser: z.boolean().optional().default(false),
   images: z.array(imageSchema).optional().default([]),
   items: z.array(itemSchema).optional().default([]),
 });
@@ -53,7 +56,6 @@ export type Card = {
   image?: ImageRef;
   summary: string;
   meta?: string;
-  sourceUrl?: string;
 };
 
 export type PersonCard = Card & {
@@ -66,7 +68,7 @@ export type ThesisItem = {
   title: string;
   href?: string;
   description?: string;
-  status: "Open" | "Ongoing" | "Finished" | "Source file";
+  status: "Open" | "Ongoing" | "Finished";
 };
 
 const sectionIntroductions: Record<Section, string> = {
@@ -89,12 +91,8 @@ function readSource(relativePath: string): SourceEntry {
   const slug = slugFromFileName(path.basename(relativePath));
   const collection = section === "pages" ? "pages" : section;
   const typedSection = collection as SourceEntry["section"];
-  const title = correctedTitle(frontmatter.title);
-  const key = ["research", "projects", "people", "theses"].includes(typedSection)
-    ? overrideKey(typedSection as Section, slug)
-    : undefined;
-  const rawBody = key && bodyOverrides.has(key) ? bodyOverrides.get(key)! : parsed.content;
-  const body = normalizeVisibleMarkdown(rawBody);
+  const title = frontmatter.title;
+  const body = normalizeVisibleMarkdown(parsed.content);
   const image = resolveFirstImage(filePath, frontmatter.images, title);
 
   return {
@@ -106,7 +104,7 @@ function readSource(relativePath: string): SourceEntry {
     title,
     href: hrefForEntry(typedSection, slug),
     image,
-    summary: summaryForEntry(typedSection, slug, body, frontmatter),
+    summary: summaryForEntry(slug, body, frontmatter),
   };
 }
 
@@ -125,7 +123,6 @@ function hrefForEntry(section: SourceEntry["section"], slug: string): string {
 
 function normalizeVisibleMarkdown(markdown: string): string {
   return markdown
-    .replace(/\[E-Mail]/g, "[Email]")
     .replace(/\n### Juniorprofessur MDS[\s\S]*$/m, "")
     .trim();
 }
@@ -141,19 +138,7 @@ function resolveFirstImage(filePath: string, images: SourceFrontmatter["images"]
   };
 }
 
-function summaryForEntry(
-  section: SourceEntry["section"],
-  slug: string,
-  body: string,
-  frontmatter: SourceFrontmatter,
-): string {
-  if (section === "research" || section === "projects" || section === "people" || section === "theses") {
-    const key = overrideKey(section, slug);
-    if (summaryOverrides.has(key)) {
-      return summaryOverrides.get(key)!;
-    }
-  }
-
+function summaryForEntry(slug: string, body: string, frontmatter: SourceFrontmatter): string {
   if (frontmatter.items[0]?.description && slug === "index") {
     return frontmatter.items[0].description;
   }
@@ -201,12 +186,25 @@ function itemImage(indexEntry: SourceEntry, item: SourceFrontmatter["items"][num
 }
 
 function normalizedItemTitle(title: string): string {
-  return correctedTitle(title);
+  return title;
 }
 
-function matchDetailByTitle(title: string, entries: SourceEntry[]): SourceEntry | undefined {
+function matchDetail(item: SourceFrontmatter["items"][number], entries: SourceEntry[]): SourceEntry | undefined {
+  if (item.slug) {
+    const bySlug = entries.find((entry) => entry.slug === item.slug);
+    if (bySlug) return bySlug;
+  }
+
+  const title = item.title;
   const normalized = slugify(normalizedItemTitle(title));
   return entries.find((entry) => slugify(entry.title) === normalized || slugify(entry.frontmatter.title) === normalized);
+}
+
+function itemHref(item: SourceFrontmatter["items"][number], detail: SourceEntry | undefined, section: Section): string | undefined {
+  if (item.href) return item.href;
+  if (detail) return detail.href;
+  if (item.slug && section !== "research") return routeFor(section, item.slug);
+  return undefined;
 }
 
 export function getResearchCards(): Card[] {
@@ -214,18 +212,17 @@ export function getResearchCards(): Card[] {
   const details = getEntries("research");
   const used = new Set<string>();
   const cards = index.frontmatter.items.map((item) => {
-    const detail = matchDetailByTitle(item.title, details);
+    const detail = matchDetail(item, details);
     if (detail) {
       used.add(detail.slug);
     }
     const title = detail?.title ?? normalizedItemTitle(item.title);
     return {
       title,
-      href: detail?.href,
+      href: itemHref(item, detail, "research"),
       image: itemImage(index, item, title),
       summary: item.description,
       meta: researchMeta(title),
-      sourceUrl: detail?.frontmatter.sourceUrl ?? index.frontmatter.sourceUrl,
     };
   });
 
@@ -237,7 +234,6 @@ export function getResearchCards(): Card[] {
       image: entry.image,
       summary: entry.summary,
       meta: researchMeta(entry.title),
-      sourceUrl: entry.frontmatter.sourceUrl,
     }));
 
   return [...cards, ...missing];
@@ -248,19 +244,17 @@ export function getProjectCards(): Card[] {
   const details = getEntries("projects");
   const used = new Set<string>();
   const cards = index.frontmatter.items.map((item) => {
-    const detail = matchDetailByTitle(item.title, details);
+    const detail = matchDetail(item, details);
     if (detail) {
       used.add(detail.slug);
     }
-    const key = detail ? overrideKey("projects", detail.slug) : undefined;
     const title = detail?.title ?? item.title;
     return {
       title,
-      href: detail?.href,
+      href: itemHref(item, detail, "projects"),
       image: itemImage(index, item, title),
-      summary: key && summaryOverrides.has(key) ? summaryOverrides.get(key)! : item.description,
+      summary: item.description,
       meta: projectMeta(detail?.slug ?? slugify(title)),
-      sourceUrl: detail?.frontmatter.sourceUrl ?? index.frontmatter.sourceUrl,
     };
   });
 
@@ -272,7 +266,6 @@ export function getProjectCards(): Card[] {
       image: entry.image,
       summary: entry.summary,
       meta: projectMeta(entry.slug),
-      sourceUrl: entry.frontmatter.sourceUrl,
     }));
 
   return [...cards, ...missing];
@@ -282,7 +275,7 @@ export function getPeopleCards(): PersonCard[] {
   const index = getIndex("people");
   const details = getEntries("people");
   return index.frontmatter.items.map((item) => {
-    const detail = matchDetailByTitle(item.title, details);
+    const detail = matchDetail(item, details);
     const { role, room } = parsePersonDescription(item.description);
     const title = detail?.title ?? item.title;
     return {
@@ -293,13 +286,12 @@ export function getPeopleCards(): PersonCard[] {
       role,
       room,
       hasDetail: Boolean(detail),
-      sourceUrl: detail?.frontmatter.sourceUrl ?? index.frontmatter.sourceUrl,
     };
   });
 }
 
 function parsePersonDescription(description: string): { role?: string; room?: string } {
-  const role = description.split("E-Mail")[0]?.trim().replace(/\s+/g, " ");
+  const role = description.split("Email")[0]?.trim().replace(/\s+/g, " ");
   const room = description.match(/Room\s+\d+/)?.[0];
   return { role, room };
 }
@@ -331,69 +323,63 @@ function projectMeta(slug: string): string {
 }
 
 export function getThesisItems(): ThesisItem[] {
+  const index = getIndex("theses");
   const details = getEntries("theses");
-  const bySlug = new Map(details.map((entry) => [entry.slug, entry]));
-  const linked = [
-    {
-      title: bySlug.get("uncertainty-aware-stenoses-segmentation")?.title ?? "",
-      href: bySlug.get("uncertainty-aware-stenoses-segmentation")?.href,
-      description: "Probabilistic deep learning for segmentation uncertainty in angiography.",
-      status: "Open" as const,
-    },
-    {
-      title: bySlug.get("cross-domain-translation-of-angiography")?.title ?? "",
-      href: bySlug.get("cross-domain-translation-of-angiography")?.href,
-      description: "Unsupervised translation from diseased to healthy vessel appearance.",
-      status: "Open" as const,
-    },
-    {
-      title: bySlug.get("transfer-learning-from-medical-ultrasound-to-marine-sonar-image-data")?.title ?? "",
-      href: bySlug.get("transfer-learning-from-medical-ultrasound-to-marine-sonar-image-data")?.href,
-      description: "Transfer learning between medical ultrasound and marine sonar image data.",
-      status: "Source file" as const,
-    },
-    {
-      title: bySlug.get("analyzing-microbiome-metabarcoding-data-with-tabpfn")?.title ?? "",
-      href: bySlug.get("analyzing-microbiome-metabarcoding-data-with-tabpfn")?.href,
-      description: "TabPFN for environmental DNA and metabarcoding data.",
-      status: "Ongoing" as const,
-    },
-  ].filter((item) => item.title) satisfies ThesisItem[];
+  return index.frontmatter.items.map((item) => {
+    const detail = matchDetail(item, details);
+    const status = parseThesisStatus(item.status);
+    return {
+      title: item.title,
+      href: itemHref(item, detail, "theses"),
+      description: item.description,
+      status,
+    };
+  });
+}
 
-  const inline: ThesisItem[] = [
-    {
-      title: "Deep learning-based classification of phytoplankton in imaging flow cytometry data",
-      status: "Open",
-    },
-    {
-      title: "Deep learning-based age estimation of fish from otoliths",
-      status: "Open",
-    },
-    {
-      title: "Methods for Pseudo-Label Selection for Student-Teacher-based Domain Adaptation",
-      description:
-        "Methods for selecting pseudo-labels in semi-supervised learning scenarios to improve model performance with unlabeled data.",
-      status: "Open",
-    },
-    {
-      title: "Analysis of harbor porpoise sounds with machine learning methods",
-      status: "Finished",
-    },
-    {
-      title: "Detecting and localizing anomalies in thermal images of industrial components using unsupervised learning methods",
-      status: "Finished",
-    },
-    {
-      title: "Deep learning-based analysis of hematomas in hyperspectral images",
-      status: "Finished",
-    },
-  ];
+function parseThesisStatus(status: string | undefined): ThesisItem["status"] {
+  if (status === "Open" || status === "Ongoing" || status === "Finished") {
+    return status;
+  }
+  return "Open";
+}
 
-  return [...linked, ...inline];
+export function groupThesisItems(items: ThesisItem[]): { status: ThesisItem["status"]; items: ThesisItem[] }[] {
+  const order: ThesisItem["status"][] = ["Open", "Ongoing", "Finished"];
+  return order
+    .map((status) => ({ status, items: items.filter((item) => item.status === status) }))
+    .filter((group) => group.items.length > 0);
+}
+
+export function getPreviewCard(): Card {
+  const sections: Section[] = ["research", "projects", "people", "theses"];
+  for (const section of sections) {
+    const entry = getEntries(section).find((candidate) => candidate.frontmatter.previewTeaser);
+    if (entry) {
+      return {
+        title: entry.title,
+        href: entry.href,
+        image: entry.image,
+        summary: entry.summary,
+        meta: `${sectionLabel(section)} preview`,
+      };
+    }
+  }
+  return getResearchCards()[0];
 }
 
 export function sectionIntro(section: Section): string {
   return sectionIntroductions[section];
+}
+
+function sectionLabel(section: Section): string {
+  const labels: Record<Section, string> = {
+    research: "Research",
+    projects: "Project",
+    people: "People",
+    theses: "Thesis",
+  };
+  return labels[section];
 }
 
 export function getPublicationsByYear(): { year: string; items: string[] }[] {
@@ -403,10 +389,10 @@ export function getPublicationsByYear(): { year: string; items: string[] }[] {
     .map((section) => {
       const year = section.match(/^##\s+(\d{4})/m)?.[1];
       if (!year) return undefined;
-      const items = section
-        .replace(/^##\s+\d{4}/m, "")
-        .split(/\n-\n/)
-        .map((item) => item.trim())
+      const body = section.replace(/^##\s+\d{4}/m, "").trim();
+      const items = body
+        .split(/\n-\s+/)
+        .map((item) => item.replace(/^-\s+/, "").trim())
         .filter(Boolean);
       return { year, items };
     })

@@ -146,3 +146,21 @@ Discuss with the audience:
 ## Good outcome
 
 The repository contains a working Astro website that builds locally, renders the major content areas, uses the local MDS content/assets, respects source boundaries, and visibly follows the Sketch/design direction.
+
+## Code & UI Review
+```
+It was a great first shot, now lets do some refinement:
+1. Make the `preview` on the Home Page something coming from a data field, like `preview-teaser: true`
+2. I don't completely understand the dependencies, but it seems that the content has always the width of the full available screen-width and the fonts seem to grow with that width as well, which blews up everything a bit. Can you give this a reasonable and well readable max-width so that even all other sizes (fonts) stay within a reasonable size limit
+3. The footer does not have the nice deep blue as it has in the Sketch Design
+4. remove the backling "source: https://www.mds-lab.de/..." Reference from all pages and all the other helper texts for the developer, like 
+5. On the Detail Pages oftentimes the images get cropped to fill the available image space completely. Make them fit, so that they are completely visible
+6. Some Tiles are not clickable (e.g. "Ultrasound Image Analysis for Diagnostic and Therapy Guidance") and I don't understand why?
+7. Structure the "Theses" Overview Page more clearly by State of the Topic (Finished, Open, etc.)
+8. Clean up all the Content Files so that:
+	8.1. The translations and typo fixes are done directly in these files, don't use a separtate translation.ts, because there should be only one source of truth for the content
+	8.2 Also Issues like broken lists (e.g. in @ashwin) should be fixed directly in the markup please, so that the content looks well structured and not broken
+	8.3. Update the 
+9. On the "People" Overview Page increase the image size of the people a bit, make also the Images clickable to open the detail pages for these people and instead of adding the hint "Overview entry only" for people without a details page, just add some hint to the people that you can find more information for them, like "more info" or something.
+10. Add a possibility to go from the Homepage Sections directly to the Overview Pages, either by making the Title clickable or add a little "more"-like Button to the bottom of the section, or whatever you prefer. Add this also to the Sketch Design to let this stay in sync.
+```

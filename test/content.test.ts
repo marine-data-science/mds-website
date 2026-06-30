@@ -1,13 +1,25 @@
 import { describe, expect, it } from "vitest";
 import { contentAssetUrl, PROMPTS_ROOT } from "../src/lib/paths";
-import { getPeopleCards, getProjectCards, getResearchCards, getThesisItems } from "../src/lib/content";
+import {
+  getPeopleCards,
+  getPreviewCard,
+  getProjectCards,
+  getResearchCards,
+  getThesisItems,
+  groupThesisItems,
+} from "../src/lib/content";
 import { rewriteHref } from "../src/lib/routes";
 
-describe("content normalization", () => {
-  it("corrects known source typos without changing source files", () => {
+describe("content loading", () => {
+  it("uses corrected content titles directly from source files", () => {
     const research = getResearchCards();
     expect(research.some((card) => card.title.includes("Placment"))).toBe(false);
     expect(research.some((card) => card.title === "Neural Processes for Optimal Sensor Placement")).toBe(true);
+  });
+
+  it("uses the explicit preview teaser field for the homepage preview", () => {
+    const preview = getPreviewCard();
+    expect(preview.title).toBe("Lifted Marginal Filtering");
   });
 
   it("keeps people without source files overview-only", () => {
@@ -29,6 +41,11 @@ describe("content normalization", () => {
     const theses = getThesisItems();
     expect(theses.some((item) => item.href?.includes("transfer-learning-from-medical-ultrasound"))).toBe(true);
     expect(theses.some((item) => item.title.includes("phytoplankton"))).toBe(true);
+  });
+
+  it("groups thesis topics by status from the theses index frontmatter", () => {
+    const groups = groupThesisItems(getThesisItems());
+    expect(groups.map((group) => group.status)).toEqual(["Open", "Ongoing", "Finished"]);
   });
 });
 
