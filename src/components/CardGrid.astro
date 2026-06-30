@@ -1,0 +1,23 @@
+---
+const { cards = [], variant = "compact" } = Astro.props;
+---
+
+<div class:list={["card-grid", variant === "roomy" && "card-grid-roomy"]}>
+  {
+    cards.map((card: any) => (
+      <article class:list={["content-card", variant === "person" && "person-card"]}>
+        {card.image && (
+          <img class="card-image" src={card.image.src} alt={card.image.alt || card.title} loading="lazy" />
+        )}
+        <div class="card-body">
+          {card.meta && <p class="card-meta">{card.meta}</p>}
+          <h2>
+            {card.href ? <a href={card.href}>{card.title}</a> : card.title}
+          </h2>
+          {card.summary && <p>{card.summary}</p>}
+          {card.hasDetail === false && <p class="micro-note">Overview entry only</p>}
+        </div>
+      </article>
+    ))
+  }
+</div>

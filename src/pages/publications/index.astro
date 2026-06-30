@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageIntro from "@components/PageIntro.astro";
+import Prose from "@components/Prose.astro";
+import { getIndex, getPublicationsByYear } from "@lib/content";
+
+const entry = getIndex("publications");
+const publications = getPublicationsByYear();
+---
+
+<BaseLayout title="Publications" description="Publications grouped by year.">
+  <PageIntro eyebrow="Publications" title="Publications" intro="Compact year-grouped list of publications from the source material." sourceUrl={entry.frontmatter.sourceUrl} />
+  <section class="publications">
+    {
+      publications.map((group) => (
+        <section class="publication-year">
+          <h2>{group.year}</h2>
+          <div class="publication-list">
+            {group.items.map((item) => (
+              <article>
+                <Prose markdown={item} />
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </section>
+</BaseLayout>

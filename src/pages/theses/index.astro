@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageIntro from "@components/PageIntro.astro";
+import { getIndex, getThesisItems, sectionIntro } from "@lib/content";
+
+const index = getIndex("theses");
+const theses = getThesisItems();
+---
+
+<BaseLayout title="Theses" description={sectionIntro("theses")}>
+  <PageIntro eyebrow="For students" title="Bachelor and Master Theses" intro={sectionIntro("theses")} sourceUrl={index.frontmatter.sourceUrl} />
+  <section class="section">
+    <div class="thesis-list">
+      {
+        theses.map((item) => (
+          <article class="thesis-item">
+            <span class="status">{item.status}</span>
+            <h3>{item.href ? <a href={item.href}>{item.title}</a> : item.title}</h3>
+            {item.description && <p>{item.description}</p>}
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

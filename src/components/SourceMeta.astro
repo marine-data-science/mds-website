@@ -1,0 +1,16 @@
+---
+const { sourceUrl, lastModified } = Astro.props;
+---
+
+{
+  (sourceUrl || lastModified) && (
+    <aside class="source-meta">
+      {lastModified && <p>Last source update: {lastModified}</p>}
+      {sourceUrl && (
+        <p>
+          Source URL: <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{sourceUrl}</a>
+        </p>
+      )}
+    </aside>
+  )
+}

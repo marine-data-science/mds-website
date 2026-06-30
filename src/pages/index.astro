@@ -1,0 +1,122 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import CardGrid from "@components/CardGrid.astro";
+import {
+  getIndex,
+  getPeopleCards,
+  getProjectCards,
+  getResearchCards,
+  getThesisItems,
+} from "@lib/content";
+
+const home = getIndex("pages");
+const researchCards = getResearchCards();
+const projectCards = getProjectCards();
+const people = getPeopleCards();
+const theses = getThesisItems();
+const preview = researchCards.find((card) => card.title === "Lifted Marginal Filtering") ?? researchCards[0];
+const featuredResearch = researchCards.slice(0, 4);
+const featuredProjects = projectCards.slice(0, 3);
+const featuredPeople = people.slice(0, 4);
+const featuredTheses = theses.filter((item) => item.status !== "Finished").slice(0, 4);
+---
+
+<BaseLayout title="Marine Data Science" description={home.summary}>
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="accent-line" aria-hidden="true"></div>
+        <p class="eyebrow">University of Rostock · Institute for Visual and Analytic Computing</p>
+        <h1>Marine Data Science</h1>
+        <p class="hero-copy">
+          Research group working at the intersection of machine learning, marine data, sensor systems,
+          probabilistic modeling, and visual computing.
+        </p>
+        <p class="hero-support">
+          Member of the CORE Network. Students, researchers, institutions, and companies can find thesis topics,
+          teaching, research expertise, and cooperation entry points here.
+        </p>
+        <div class="pill-row" aria-label="Entry points">
+          <a class="pill" href="/theses/">Thesis topics</a>
+          <a class="pill" href="/research/">Research topics</a>
+          <a class="pill" href="/projects/">Cooperation</a>
+        </div>
+      </div>
+      <aside class="preview-panel" aria-label="Source content preview">
+        {preview.image && <img src={preview.image.src} alt={preview.image.alt} />}
+        <div>
+          <p>Research preview</p>
+          <h2><a href={preview.href}>{preview.title}</a></h2>
+        </div>
+        <div class="network-mark" aria-hidden="true">
+          <span class="network-dot"></span>
+          <span class="network-dot"></span>
+          <span class="network-dot"></span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <p class="below-hint">Latest entry points below: research topics, funded projects, people, and theses.</p>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Research</h2>
+      <p>Compact topic cards show a visual cue, a one-sentence summary, and a route into the full source-backed topic page.</p>
+    </div>
+    <CardGrid cards={featuredResearch} />
+  </section>
+
+  <section class="section band">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Projects</h2>
+        <p>Funded and applied projects use roomier cards because external visitors need project context and cooperation signals quickly.</p>
+      </div>
+      <CardGrid cards={featuredProjects} variant="roomy" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>People</h2>
+      <p>Overview-first scanning for students and collaborators. Detail pages appear only where source files exist.</p>
+    </div>
+    <div class="people-list">
+      {
+        featuredPeople.map((person) => (
+          <article class="person-row">
+            {person.image && <img src={person.image.src} alt={person.image.alt} loading="lazy" />}
+            <div>
+              <h3>{person.href ? <a href={person.href}>{person.title}</a> : person.title}</h3>
+              <p>{person.summary}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="theses-feature">
+    <div class="theses-panel">
+      <div>
+        <p class="eyebrow">For students</p>
+        <h2>Bachelor and Master Theses</h2>
+        <p class="hero-support">
+          We are always looking for motivated students. Open topics are listed, and students can also propose topics in the group's research areas.
+        </p>
+      </div>
+      <div class="thesis-list">
+        {
+          featuredTheses.map((item) => (
+            <article class="thesis-item">
+              <span class="status">{item.status}</span>
+              <h3>{item.href ? <a href={item.href}>{item.title}</a> : item.title}</h3>
+              {item.description && <p>{item.description}</p>}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

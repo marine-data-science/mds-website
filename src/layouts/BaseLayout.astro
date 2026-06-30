@@ -1,0 +1,88 @@
+---
+import { styleAssetUrl } from "@lib/paths";
+import "@styles/global.css";
+
+type NavItem = {
+  href: string;
+  label: string;
+};
+
+const {
+  title = "Marine Data Science",
+  description = "Marine Data Science research group at the University of Rostock.",
+} = Astro.props;
+
+const nav: NavItem[] = [
+  { href: "/research/", label: "Research" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/people/", label: "People" },
+  { href: "/theses/", label: "Theses" },
+  { href: "/teaching/", label: "Teaching" },
+  { href: "/publications/", label: "Publications" },
+];
+
+const logo = styleAssetUrl("Logo_MDS_1-3-Final_color.svg");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title === "Marine Data Science" ? title : `${title} · Marine Data Science`}</title>
+  </head>
+  <body>
+    <div class="top-rule" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Marine Data Science home">
+        <img src={logo} alt="Marine Data Science logo" width="150" height="106" />
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <details class="mobile-nav">
+        <summary aria-label="Open navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </summary>
+        <nav aria-label="Mobile navigation">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+      </details>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src={logo} alt="" width="108" height="76" />
+          <div>
+            <h2>Marine Data Science</h2>
+            <p>Research group at the University of Rostock<br />Institute for Visual and Analytic Computing</p>
+          </div>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <p>Junior Professorship MDS<br />Albert-Einstein-Str. 21<br />18059 Rostock</p>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <p>
+            <a href="https://www.uni-rostock.de/impressum/" target="_blank" rel="noopener noreferrer">Imprint</a><br />
+            <a href="https://www.uni-rostock.de/datenschutz/" target="_blank" rel="noopener noreferrer">Privacy</a><br />
+            <a href="https://www.uni-rostock.de/barrierefreiheit/" target="_blank" rel="noopener noreferrer">Accessibility</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Legal links point to the University of Rostock until project-specific pages are confirmed.</p>
+        <p>© Marine Data Science · University of Rostock</p>
+      </div>
+    </footer>
+  </body>
+</html>

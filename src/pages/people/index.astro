@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PageIntro from "@components/PageIntro.astro";
+import { getIndex, getPeopleCards, sectionIntro } from "@lib/content";
+
+const index = getIndex("people");
+const people = getPeopleCards();
+---
+
+<BaseLayout title="People" description={sectionIntro("people")}>
+  <PageIntro eyebrow="People" title="People" intro={sectionIntro("people")} sourceUrl={index.frontmatter.sourceUrl} />
+  <section class="section">
+    <div class="people-list">
+      {
+        people.map((person) => (
+          <article class="person-row">
+            {person.image && <img src={person.image.src} alt={person.image.alt} loading="lazy" />}
+            <div>
+              <h3>{person.href ? <a href={person.href}>{person.title}</a> : person.title}</h3>
+              <p>{person.summary}</p>
+              {!person.hasDetail && <p class="micro-note">Overview entry only</p>}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
