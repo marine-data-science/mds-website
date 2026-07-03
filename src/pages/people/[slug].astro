@@ -12,11 +12,11 @@ const { entry } = Astro.props;
 ---
 
 <BaseLayout title={entry.title} description={entry.summary}>
-  <PageIntro eyebrow="Person" title={entry.title} intro={entry.summary} />
+  <PageIntro eyebrow="Person" title={entry.title} intro={entry.intro} />
   <section class="detail-shell">
     <article>
       {entry.image && <img class="detail-image" src={entry.image.src} alt={entry.image.alt} />}
-      <Prose markdown={entry.body} />
+      <Prose markdown={entry.bodyWithoutIntro} />
     </article>
   </section>
 </BaseLayout>

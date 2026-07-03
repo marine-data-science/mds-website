@@ -242,59 +242,6 @@ p {
   font-size: 2rem;
 }
 
-.network-mark {
-  position: absolute;
-  right: 34px;
-  bottom: 28px;
-  width: 72px;
-  height: 92px;
-  opacity: 0.55;
-}
-
-.network-mark::before,
-.network-mark::after {
-  content: "";
-  position: absolute;
-  width: 1px;
-  background: var(--blue-mid);
-}
-
-.network-mark::before {
-  height: 58px;
-  left: 12px;
-  top: 26px;
-  transform: rotate(-26deg);
-}
-
-.network-mark::after {
-  height: 72px;
-  right: 12px;
-  top: 8px;
-}
-
-.network-dot {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--blue-deep);
-}
-
-.network-dot:nth-child(1) {
-  left: 0;
-  top: 42px;
-}
-
-.network-dot:nth-child(2) {
-  right: 4px;
-  top: 8px;
-}
-
-.network-dot:nth-child(3) {
-  right: 4px;
-  bottom: 8px;
-}
-
 .below-hint,
 .section,
 .page-intro,
@@ -354,6 +301,8 @@ p {
   max-width: 920px;
   color: var(--muted);
   font-size: 1.05rem;
+  line-height: 1.6;
+  overflow: visible;
 }
 
 .card-grid {
@@ -811,10 +760,6 @@ p {
 
   .preview-panel p {
     margin-top: 0;
-  }
-
-  .network-mark {
-    display: none;
   }
 
   .section {

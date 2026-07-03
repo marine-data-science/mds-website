@@ -40,10 +40,12 @@ export type SourceEntry = {
   filePath: string;
   frontmatter: SourceFrontmatter;
   body: string;
+  bodyWithoutIntro: string;
   title: string;
   href: string;
   image?: ImageRef;
   summary: string;
+  intro: string;
 };
 
 export type ImageRef = {
@@ -94,6 +96,7 @@ function readSource(relativePath: string): SourceEntry {
   const typedSection = collection as SourceEntry["section"];
   const title = frontmatter.title;
   const body = normalizeVisibleMarkdown(parsed.content);
+  const contentParagraph = firstContentParagraph(body);
   const image = resolveFirstImage(filePath, frontmatter.images, title);
 
   return {
@@ -102,10 +105,12 @@ function readSource(relativePath: string): SourceEntry {
     filePath,
     frontmatter,
     body,
+    bodyWithoutIntro: removeFirstContentParagraph(body, contentParagraph),
     title,
     href: hrefForEntry(typedSection, slug),
     image,
     summary: summaryForEntry(slug, body, frontmatter),
+    intro: introForEntry(slug, body, frontmatter),
   };
 }
 
@@ -140,16 +145,34 @@ function resolveFirstImage(filePath: string, images: SourceFrontmatter["images"]
 }
 
 function summaryForEntry(slug: string, body: string, frontmatter: SourceFrontmatter): string {
+  return introForEntry(slug, body, frontmatter).slice(0, 220);
+}
+
+function introForEntry(slug: string, body: string, frontmatter: SourceFrontmatter): string {
   if (frontmatter.items[0]?.description && slug === "index") {
     return frontmatter.items[0].description;
   }
 
-  const paragraphs = body
+  const first = firstContentParagraph(body);
+  return first ? stripMarkdown(first) : "";
+}
+
+function firstContentParagraph(body: string): string | undefined {
+  return body
     .split(/\n{2,}/)
     .map((paragraph) => paragraph.trim())
-    .filter((paragraph) => paragraph && !paragraph.startsWith("#") && !paragraph.startsWith("Figure source"));
-  const first = paragraphs.find((paragraph) => stripMarkdown(paragraph).length > 40) ?? "";
-  return stripMarkdown(first).slice(0, 220);
+    .find((paragraph) => paragraph && !paragraph.startsWith("#") && !paragraph.startsWith("Figure source") && stripMarkdown(paragraph).length > 40);
+}
+
+function removeFirstContentParagraph(body: string, paragraph: string | undefined): string {
+  if (!paragraph) {
+    return body;
+  }
+  const index = body.indexOf(paragraph);
+  if (index === -1) {
+    return body;
+  }
+  return `${body.slice(0, index)}${body.slice(index + paragraph.length)}`.replace(/\n{3,}/g, "\n\n").trim();
 }
 
 function listMdxFiles(section: Section | "pages" | "teaching" | "publications"): string[] {
@@ -357,7 +380,8 @@ export function getPreviewCard(): Card {
   for (const section of sections) {
     const entry = getEntries(section).find((candidate) => candidate.frontmatter.previewTeaser);
     if (entry) {
-      return {
+      const card = cardsForSection(section).find((candidate) => candidate.href === entry.href);
+      return card ?? {
         title: entry.title,
         href: entry.href,
         image: entry.image,
@@ -367,6 +391,18 @@ export function getPreviewCard(): Card {
     }
   }
   return getResearchCards()[0];
+}
+
+function cardsForSection(section: Section): Card[] {
+  if (section === "research") return getResearchCards();
+  if (section === "projects") return getProjectCards();
+  if (section === "people") return getPeopleCards();
+  return getThesisItems().map((item) => ({
+    title: item.title,
+    href: item.href,
+    summary: item.description ?? "",
+    meta: `${item.status} thesis`,
+  }));
 }
 
 export function sectionIntro(section: Section): string {

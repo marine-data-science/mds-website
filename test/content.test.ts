@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { contentAssetUrl, PROMPTS_ROOT } from "../src/lib/paths";
 import {
+  getEntry,
   getPeopleCards,
   getPreviewCard,
   getProjectCards,
@@ -19,7 +20,17 @@ describe("content loading", () => {
 
   it("uses the explicit preview teaser field for the homepage preview", () => {
     const preview = getPreviewCard();
-    expect(preview.title).toBe("Lifted Marginal Filtering");
+    expect(preview.title).toBe("Neural Processes for Optimal Sensor Placement");
+    expect(preview.image?.src).toContain("Bildschirmfoto-vom-2025-05-02-11-04-19.png");
+  });
+
+  it("keeps detail page intros untruncated", () => {
+    const entry = getEntry("research", "optimal-sensor-placement");
+    expect(entry?.summary).toHaveLength(220);
+    expect(entry?.intro).toContain("generate high-resolution maps");
+    expect(entry?.intro).toContain("which inputs most influence the results.");
+    expect(entry?.bodyWithoutIntro).not.toContain("These regression models can be used to generate high-resolution maps");
+    expect(entry?.bodyWithoutIntro).toContain("Specifically, we use **Neural Processes**");
   });
 
   it("keeps people without source files overview-only", () => {

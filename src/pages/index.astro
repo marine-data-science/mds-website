@@ -38,26 +38,13 @@ const thesesHref = withBasePath("/theses/");
           Research group working at the intersection of machine learning, marine data, sensor systems,
           probabilistic modeling, and visual computing.
         </p>
-        <p class="hero-support">
-          Member of the CORE Network. Students, researchers, institutions, and companies can find thesis topics,
-          teaching, research expertise, and cooperation entry points here.
-        </p>
-        <div class="pill-row" aria-label="Entry points">
-          <a class="pill" href={thesesHref}>Thesis topics</a>
-          <a class="pill" href={researchHref}>Research topics</a>
-          <a class="pill" href={projectsHref}>Cooperation</a>
-        </div>
+        <p class="hero-support">Member of the CORE Network.</p>
       </div>
       <aside class="preview-panel" aria-label="Selected research preview">
         {preview.image && <img src={preview.image.src} alt={preview.image.alt} />}
         <div>
           <p>{preview.meta ?? "Preview"}</p>
           <h2><a href={preview.href}>{preview.title}</a></h2>
-        </div>
-        <div class="network-mark" aria-hidden="true">
-          <span class="network-dot"></span>
-          <span class="network-dot"></span>
-          <span class="network-dot"></span>
         </div>
       </aside>
     </div>
