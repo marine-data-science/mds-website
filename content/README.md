@@ -407,8 +407,7 @@ order: 40
 detailPage: true
 status: Open
 keywords:
-  - computer vision
-  - marine data
+  - marine
 degree: Bachelor or Master
 supervisors:
   - Jane Doe

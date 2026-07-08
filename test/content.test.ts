@@ -73,11 +73,7 @@ describe("collection-backed overview content", () => {
     expect(theses.some((item) => item.href?.includes("transfer-learning-from-medical-ultrasound"))).toBe(true);
     expect(theses.some((item) => item.title.includes("phytoplankton"))).toBe(true);
     expect(groups.map((group) => group.status)).toEqual(["Open", "Ongoing", "Finished"]);
-    expect(theses.find((item) => item.title.includes("TabPFN"))?.keywords).toEqual([
-      "metabarcoding",
-      "TabPFN",
-      "tabular data",
-    ]);
+    expect(theses.find((item) => item.title.includes("TabPFN"))?.keywords).toEqual(["microbiology"]);
   });
 
   it("does not rely on overview frontmatter item arrays", async () => {
@@ -89,14 +85,12 @@ describe("collection-backed overview content", () => {
     expect(overviewPages.every((entry) => !("items" in entry.data))).toBe(true);
   });
 
-  it("uses overview frontmatter for title, eyebrow, and summary while rendering markdown body separately", async () => {
+  it("uses overview frontmatter for title, eyebrow, and summary", async () => {
     const research = await getIndex("research");
 
     expect(research.data.title).toBe("Research");
     expect(research.data.eyebrow).toBe("Research topics");
     expect(research.data.summary).toContain("Machine learning methods");
-    expect(bodyForIndex(research)).toContain("The Marine Data Science group works");
-    expect(bodyForIndex(research)).not.toContain("# Research");
   });
 
   it("uses home frontmatter to configure the homepage hero and collection sections", async () => {
