@@ -151,7 +151,9 @@ export function slugForEntry(entry: ItemEntry | PageEntry): string {
   return slugFromFileName(path.basename(withMdxExtension(entry.id)));
 }
 
-export function sourceFileForEntry(entry: ItemEntry | PageEntry): string {
+export function sourceFileForEntry(
+  entry: ItemEntry | PageEntry | StandalonePageEntry,
+): string {
   if (entry.collection === "pages") {
     return path.join(CONTENT_ROOT, withMdxExtension(entry.id));
   }

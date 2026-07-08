@@ -90,4 +90,10 @@ The expected public URL is:
 
 https://marine-data-science.github.io/mds-website/
 
+SEO-facing absolute URLs are generated from the Astro deployment settings. The default build targets the temporary GitHub Pages URL above. For the future `mds-lab.de` domain, build with:
+
+```sh
+PUBLIC_SITE_URL=https://www.mds-lab.de PUBLIC_BASE_PATH=/ npm run build
+```
+
 The repository must be configured in GitHub under Settings -> Pages -> Build and deployment -> Source: GitHub Actions.

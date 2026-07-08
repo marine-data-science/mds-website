@@ -12,7 +12,7 @@ The default architecture avoids unnecessary client-side JavaScript. Interactive 
 
 Production deployment uses GitHub Pages from the static Astro build output in `dist/`. The GitHub Actions workflow at `.github/workflows/deploy-pages.yml` runs for pushes to `main` that affect site source, content, docs, package/config files, or the workflow itself.
 
-Astro is configured with `site: "https://marine-data-science.github.io"` and `base: "/mds-website"` for repository-based Pages hosting at `https://marine-data-science.github.io/mds-website/`. Internal routes and local asset URLs must pass through the shared base-path helper so links continue to work under the repository path.
+Astro defaults to `site: "https://marine-data-science.github.io"` and `base: "/mds-website"` for repository-based Pages hosting at `https://marine-data-science.github.io/mds-website/`. Those values can be overridden at build time with `PUBLIC_SITE_URL` and `PUBLIC_BASE_PATH`; use `PUBLIC_SITE_URL=https://www.mds-lab.de PUBLIC_BASE_PATH=/` when publishing the site at the future root domain. Internal routes, local asset URLs, canonical URLs, sitemap entries, and social preview URLs must pass through the shared site helpers so links continue to work under either hosting shape.
 
 The Pages artifact must remain the generated `dist/` directory. Source folders such as `content/` and `docs/` are not uploaded directly; only processed site output and static files under `public/` are published.
 

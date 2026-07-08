@@ -1,5 +1,5 @@
 ---
-import { withBasePath } from "@lib/site";
+import { absoluteSiteUrl, withBasePath } from "@lib/site";
 import "@styles/global.css";
 
 type NavItem = {
@@ -22,7 +22,32 @@ const nav: NavItem[] = [
 ];
 
 const logo = withBasePath("/brand/Logo_MDS_1-3-Final_color.svg");
+const favicon = withBasePath("/brand/favicon.svg");
+const faviconPng = withBasePath("/brand/favicon-32x32.png");
+const appleTouchIcon = withBasePath("/brand/apple-touch-icon.png");
+const socialImage = absoluteSiteUrl("/brand/social-card.png");
 const homeHref = withBasePath("/");
+const pageTitle = title === "Marine Data Science" ? title : `${title} · Marine Data Science`;
+const canonicalUrl = absoluteSiteUrl(Astro.url.pathname);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Marine Data Science",
+  url: absoluteSiteUrl("/"),
+  logo: absoluteSiteUrl("/brand/Logo_MDS_1-3-Final_color.png"),
+  parentOrganization: {
+    "@type": "CollegeOrUniversity",
+    name: "University of Rostock",
+    url: "https://www.uni-rostock.de/",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Albert-Einstein-Str. 21",
+    postalCode: "18059",
+    addressLocality: "Rostock",
+    addressCountry: "DE",
+  },
+};
 ---
 
 <!doctype html>
@@ -31,7 +56,26 @@ const homeHref = withBasePath("/");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <title>{title === "Marine Data Science" ? title : `${title} · Marine Data Science`}</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href={favicon} type="image/svg+xml" />
+    <link rel="alternate icon" href={faviconPng} type="image/png" sizes="33x33" />
+    <link rel="apple-touch-icon" href={appleTouchIcon} sizes="180x180" />
+    <meta name="theme-color" content="#00529F" />
+    <meta property="og:site_name" content="Marine Data Science" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1060" />
+    <meta property="og:image:height" content="490" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+    <title>{pageTitle}</title>
   </head>
   <body>
     <div class="top-rule" aria-hidden="true"></div>
