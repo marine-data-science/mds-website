@@ -128,10 +128,10 @@ function cardVariant(section: ItemSection): "compact" | "roomy" {
   </section>
 
   {
-    homeSections.map((section, index) => {
+    homeSections.map((section) => {
       if (section.collection === "theses") {
         return (
-          <section class="theses-feature">
+          <section class="homepage-section theses-feature">
             <div class="theses-panel">
               <div>
                 {section.eyebrow && <p class="eyebrow">{section.eyebrow}</p>}
@@ -156,8 +156,8 @@ function cardVariant(section: ItemSection): "compact" | "roomy" {
       }
 
       return (
-        <section class:list={["section", index % 2 === 1 && "band"]}>
-          <div class={index % 2 === 1 ? "section-inner" : undefined}>
+        <section class="homepage-section section">
+          <div class="section-inner">
             <div class="section-header">
               <h2><a href={section.href}>{section.title}</a></h2>
               <p>{section.summary}</p>

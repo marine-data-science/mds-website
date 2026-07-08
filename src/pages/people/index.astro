@@ -7,7 +7,6 @@ import { bodyForIndex, getIndex, getPeopleCards, sectionIntro } from "@lib/conte
 const index = await getIndex("people");
 const people = await getPeopleCards();
 const currentPeople = people.filter((person) => !person.alumni);
-const alumni = people.filter((person) => person.alumni);
 const intro = await sectionIntro("people");
 const title = index.data.title;
 const eyebrow = index.data.eyebrow ?? "People";
@@ -37,20 +36,4 @@ const body = bodyForIndex(index);
       }
     </div>
   </section>
-  {alumni.length > 0 && (
-    <section class="section alumni-section">
-      <div class="section-header compact">
-        <h2>Alumni</h2>
-        <p>{alumni.length} {alumni.length === 1 ? "person" : "people"}</p>
-      </div>
-      <ul class="alumni-list">
-        {alumni.map((person) => (
-          <li>
-            {person.href ? <a href={person.href}>{person.title}</a> : person.title}
-            {person.role && <span>{person.role}</span>}
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
 </BaseLayout>

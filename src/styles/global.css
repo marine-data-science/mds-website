@@ -1,3 +1,11 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/inter/800.css";
+@import "@fontsource/barlow-condensed/500.css";
+@import "@fontsource/barlow-condensed/700.css";
+@import "@fontsource/barlow-condensed/800.css";
+
 :root {
   --blue-deep: #00529f;
   --blue-institutional: #19519d;
@@ -135,7 +143,7 @@ h4 {
   margin: 0;
   line-height: 1.05;
   font-family: "Barlow Condensed", "Roboto Condensed", "Arial Narrow", Inter, sans-serif;
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: 0;
   color: var(--ink);
 }
@@ -179,6 +187,7 @@ p {
 .hero h1 {
   max-width: 680px;
   font-size: clamp(3.4rem, 7vw, 5.2rem);
+  font-weight: 800;
 }
 
 .hero-copy {
@@ -240,6 +249,7 @@ p {
 .preview-panel h2 {
   margin-top: 8px;
   font-size: 2rem;
+  font-weight: 500;
 }
 
 .below-hint,
@@ -269,12 +279,15 @@ p {
   padding-top: 24px;
 }
 
-.section.band {
-  width: 100%;
+.homepage-section:nth-of-type(2n + 3) {
   background: var(--surface-blue);
 }
 
-.section.band > .section-inner {
+.homepage-section.section {
+  width: 100%;
+}
+
+.homepage-section > .section-inner {
   width: var(--content);
   margin: 0 auto;
 }
@@ -384,6 +397,7 @@ p {
 
 .content-card h2 {
   font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .content-card h2 a {
@@ -473,7 +487,6 @@ p {
 }
 
 .theses-feature {
-  background: var(--surface-blue);
   padding: 50px 0 64px;
 }
 
@@ -521,6 +534,7 @@ p {
 
 .thesis-item h3 {
   font-size: 1.75rem;
+  font-weight: 500;
 }
 
 .thesis-item h3 a {

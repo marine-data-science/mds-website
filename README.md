@@ -34,6 +34,12 @@ The durable source structure is now:
 - [Architectural decision records](docs/adr/)
 - [Source issues for human review](docs/content-review/source-issues.md)
 
+## Content Editing Access
+
+Access for editing the website content is managed through GitHub team membership.
+
+New editors should be added to the [MDS-Staff team](https://github.com/orgs/marine-data-science/teams/mds-staff) in the [Marine Data Science GitHub organization](https://github.com/marine-data-science). Members of that team have `write` permission on this repository and can edit the website content through the normal GitHub workflow.
+
 ## Content Model In One Minute
 
 Each website item is an `.mdx` file. Metadata lives at the top of the file between `---` lines, and the page text comes below it.

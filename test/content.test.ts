@@ -101,9 +101,9 @@ describe("collection-backed overview content", () => {
     expect(home.data.sections).toEqual([
       { collection: "research", limit: 4 },
       { collection: "projects", limit: 3 },
-      { collection: "people", limit: "all" },
       { collection: "theses", limit: 4 },
       { collection: "teaching", limit: 3 },
+      { collection: "people", limit: "all" },
     ]);
     expect(bodyForIndex(home)).toContain("CORE Network");
   });
