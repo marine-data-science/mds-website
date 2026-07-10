@@ -122,6 +122,8 @@ The `sections` list controls which overview blocks appear on the homepage and in
 
 Use `limit: 3` or another number to show only the first entries. Use `limit: all` to show every entry from that collection. The section title and section description still come from the matching overview file, for example `content/research/index.mdx` or `content/people/index.mdx`.
 
+The homepage thesis section has one extra rule: it shows all `Open` thesis topics first, then fills with `Ongoing` topics until it reaches the configured numeric `limit`. It never shows `Finished` topics on the homepage. If there are more open topics than the numeric limit, all open topics are still shown.
+
 What `home.mdx` controls:
 
 - the homepage hero title, eyebrow, summary, and optional body text.

@@ -44,7 +44,7 @@ The content model uses item files as the source of truth:
 There are two different overview mechanisms:
 
 - Collection overview routes such as `/research/`, `/projects/`, `/people/`, `/teaching/`, and `/theses/` load their own `content/<collection>/index.mdx` for page-level copy, then list item files from the same collection.
-- The homepage loads `content/pages/home.mdx` for the hero and uses `home.mdx.sections` as a composition list. Each section entry points to a collection and may set `limit` to a number or `all`. The homepage then loads section title and description from that collection's `index.mdx` and item cards from the collection entries.
+- The homepage loads `content/pages/home.mdx` for the hero and uses `home.mdx.sections` as a composition list. Each section entry points to a collection and may set `limit` to a number or `all`. The homepage then loads section title and description from that collection's `index.mdx` and item cards from the collection entries. The homepage thesis section treats a numeric `limit` as the target count after showing all `Open` thesis topics, then filling with `Ongoing` topics; `Finished` topics are excluded from the homepage.
 
 The `sections` array is intentionally not an item-data array. It contains only collection references and display limits. Item metadata must remain in the item MDX files.
 

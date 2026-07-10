@@ -18,6 +18,8 @@ import {
   hrefForDetailPage,
   metadataRowsForEntry,
   pageSlugForEntry,
+  selectHomepageThesisItems,
+  type ThesisItem,
 } from "../src/lib/content";
 import { rewriteHref } from "../src/lib/routes";
 
@@ -77,6 +79,29 @@ describe("collection-backed overview content", () => {
     expect(theses.some((item) => item.title.includes("phytoplankton"))).toBe(true);
     expect(groups.map((group) => group.status)).toEqual(["Open", "Ongoing", "Finished"]);
     expect(theses.find((item) => item.title.includes("TabPFN"))?.keywords).toEqual(["microbiology"]);
+  });
+
+  it("selects open homepage thesis topics first and fills with ongoing topics only", async () => {
+    const theses = await getThesisItems();
+    const homepageTheses = selectHomepageThesisItems(theses, 4);
+
+    expect(homepageTheses).toHaveLength(4);
+    expect(homepageTheses.every((item) => item.status !== "Finished")).toBe(true);
+    expect(homepageTheses.filter((item) => item.status === "Open")).toEqual(
+      theses.filter((item) => item.status === "Open"),
+    );
+    expect(homepageTheses.map((item) => item.status)).toEqual(["Open", "Open", "Open", "Ongoing"]);
+  });
+
+  it("does not hide open homepage thesis topics when there are more than the target count", () => {
+    const items: ThesisItem[] = [
+      { title: "Open 1", status: "Open", href: "/1/", description: "", keywords: [] },
+      { title: "Open 2", status: "Open", href: "/2/", description: "", keywords: [] },
+      { title: "Ongoing 1", status: "Ongoing", href: "/3/", description: "", keywords: [] },
+      { title: "Finished 1", status: "Finished", href: "/4/", description: "", keywords: [] },
+    ];
+
+    expect(selectHomepageThesisItems(items, 1).map((item) => item.title)).toEqual(["Open 1", "Open 2"]);
   });
 
   it("links thesis supervisors to matching people detail targets", async () => {

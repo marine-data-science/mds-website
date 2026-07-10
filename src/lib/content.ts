@@ -279,6 +279,23 @@ export function groupThesisItems(
     .filter((group) => group.items.length > 0);
 }
 
+export function selectHomepageThesisItems(
+  items: ThesisItem[],
+  targetCount: number | "all" | undefined,
+): ThesisItem[] {
+  const visibleItems = items.filter((item) => item.status !== "Finished");
+
+  if (targetCount === "all" || targetCount === undefined) {
+    return visibleItems;
+  }
+
+  const openItems = visibleItems.filter((item) => item.status === "Open");
+  const ongoingItems = visibleItems.filter((item) => item.status === "Ongoing");
+  const count = Math.max(openItems.length, targetCount);
+
+  return [...openItems, ...ongoingItems].slice(0, count);
+}
+
 export async function getPreviewCard(): Promise<Card> {
   const sections: ItemSection[] = [
     "research",
