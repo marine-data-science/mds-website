@@ -21,8 +21,7 @@ const nav: NavItem[] = [
   { href: withBasePath("/publications/"), label: "Publications" },
 ];
 
-const logo = withBasePath("/brand/Logo_MDS_1-3-Final_color.svg");
-const favicon = withBasePath("/brand/favicon.svg");
+const logo = withBasePath("/brand/logo-mds-600.png");
 const faviconPng = withBasePath("/brand/favicon-32x32.png");
 const appleTouchIcon = withBasePath("/brand/apple-touch-icon.png");
 const socialImage = absoluteSiteUrl("/brand/social-card.png");
@@ -34,7 +33,7 @@ const structuredData = {
   "@type": "Organization",
   name: "Marine Data Science",
   url: absoluteSiteUrl("/"),
-  logo: absoluteSiteUrl("/brand/Logo_MDS_1-3-Final_color.png"),
+  logo: absoluteSiteUrl("/brand/logo-mds-600.png"),
   parentOrganization: {
     "@type": "CollegeOrUniversity",
     name: "University of Rostock",
@@ -58,8 +57,7 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="icon" href={favicon} type="image/svg+xml" />
-    <link rel="alternate icon" href={faviconPng} type="image/png" sizes="33x33" />
+    <link rel="icon" href={faviconPng} type="image/png" sizes="33x33" />
     <link rel="apple-touch-icon" href={appleTouchIcon} sizes="180x180" />
     <meta name="theme-color" content="#00529F" />
     <meta property="og:site_name" content="Marine Data Science" />
